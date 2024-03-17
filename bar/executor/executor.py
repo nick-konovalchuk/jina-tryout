@@ -1,7 +1,10 @@
 from docarray import DocList
-from jina import Executor, requests
+from jina import Executor
+from jina import requests
 
-from .doc import FooDoc, BarDoc
+from .doc import BarDoc
+from .doc import FooDoc
+
 
 __all__ = ["Bar"]
 

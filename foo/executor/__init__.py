@@ -1,1 +1,1 @@
-from .executor import Foo
+from .executor import Foo  # noqa: F401

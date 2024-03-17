@@ -1,1 +1,1 @@
-from .executor import Bar
+from .executor import Bar  # noqa: F401

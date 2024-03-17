@@ -1,5 +1,6 @@
 from docarray import BaseDoc
 
+
 __all__ = ["Text", "FooDoc"]
 
 
