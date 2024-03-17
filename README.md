@@ -10,3 +10,8 @@ docker-compose up
 python main.py
 ```
 The only things added are build:context parts of executors
+## Executors
+The baseline file structure for executors is generated with 
+```shell
+jina hub new
+```
