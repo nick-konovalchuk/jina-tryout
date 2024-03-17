@@ -1,0 +1,98 @@
+version: '3.3'
+networks:
+  jina-network:
+    driver: bridge
+services:
+  foo:
+    build:
+      context: foo
+    entrypoint:
+    - jina
+    command:
+    - executor
+    - --name
+    - foo
+    - --uses
+    - config.yml
+    - --host
+    - 0.0.0.0
+    - --port
+    - '8081'
+    - --port-monitoring
+    - '65080'
+    - --uses-metas
+    - '{}'
+    - --native
+    - --workspace
+    - /app/.cache/jina
+    healthcheck:
+      test: jina ping executor 127.0.0.1:8081
+      interval: 2s
+    environment:
+    - JINA_LOG_LEVEL=INFO
+    volumes:
+    - /home/nick/.cache/jina:/app
+    networks:
+    - jina-network
+  bar:
+    build:
+      context: bar
+    entrypoint:
+    - jina
+    command:
+    - executor
+    - --name
+    - bar
+    - --uses
+    - config.yml
+    - --host
+    - 0.0.0.0
+    - --port
+    - '8081'
+    - --port-monitoring
+    - '50568'
+    - --uses-metas
+    - '{}'
+    - --native
+    - --workspace
+    - /app/.cache/jina
+    healthcheck:
+      test: jina ping executor 127.0.0.1:8081
+      interval: 2s
+    environment:
+    - JINA_LOG_LEVEL=INFO
+    volumes:
+    - /home/nick/.cache/jina:/app
+    networks:
+    - jina-network
+  gateway:
+    image: registry.hubble.jina.ai/executors/k7xuf1u1:65f03f3a905a1c7d6ef28383
+    entrypoint:
+    - jina
+    command:
+    - gateway
+    - --expose-endpoints
+    - '{}'
+    - --uses
+    - HTTPGateway
+    - --graph-description
+    - '{"foo": ["bar"], "start-gateway": ["foo"], "bar": ["end-gateway"]}'
+    - --deployments-addresses
+    - '{"foo": ["foo:8081"], "bar": ["bar:8081"]}'
+    - --port
+    - '5001'
+    - --protocol
+    - HTTP
+    - --port-monitoring
+    - '61113'
+    expose:
+    - 5001
+    ports:
+    - 5001:5001
+    healthcheck:
+      test: jina ping gateway http://127.0.0.1:5001
+      interval: 2s
+    environment:
+    - JINA_LOG_LEVEL=INFO
+    networks:
+    - jina-network

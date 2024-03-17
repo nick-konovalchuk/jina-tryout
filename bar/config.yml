@@ -1,0 +1,3 @@
+jtype: Bar
+py_modules:
+  - executor/__init__.py

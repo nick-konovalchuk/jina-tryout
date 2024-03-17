@@ -1,0 +1,3 @@
+jtype: Foo
+py_modules:
+  - executor/__init__.py
