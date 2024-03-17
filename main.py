@@ -6,4 +6,4 @@ f = (
     .add(name="bar", uses="docker://jina-tryout-bar", uses_after="foo")
 )
 
-f.to_docker_compose_yaml("d.yml")
+f.to_docker_compose_yaml("docker-compose.yml")
